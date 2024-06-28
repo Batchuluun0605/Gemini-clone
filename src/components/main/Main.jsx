@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext } from "react";
 import "./Main.css";
 import { assests } from "../../assets/assest";
@@ -19,30 +20,56 @@ const Main = () => {
         <img src={assests.profile} alt="" className="" />
       </div>
       <div className="main-container">
-        <div className="greet">
-          <p>
-            <span>Hello, Dev.</span>
-          </p>
-          <p>How can I help you today</p>
-        </div>
-        <div className="cards">
-          <div className="card">
-            <p>Suggest beautiful places to see on an uncoming road trip </p>
-            <img src={assests.compass} alt="" />
+        {!showResult ? (
+          <>
+            <div className="greet">
+              <p>
+                <span>Hello, Dev.</span>
+              </p>
+              <p>How can I help you today</p>
+            </div>
+            <div className="cards">
+              <div className="card">
+                <p>Suggest beautiful places to see on an uncoming road trip </p>
+                <img src={assests.compass} alt="" />
+              </div>
+              <div className="card">
+                <p>Briefly summarize this concept: urban planing</p>
+                <img src={assests.idea} alt="" />
+              </div>
+              <div className="card">
+                <p>Brainstorm team bonding activites for our work retreat</p>
+                <img src={assests.comment} alt="" />
+              </div>
+              <div className="card">
+                <p>Improve the readebility of the following code</p>
+                <img src={assests.code} alt="" />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="result">
+            <div className="result-title">
+              <img src={assests.profile} alt="" />
+              <p>{recentPrompt}</p>
+            </div>
+            <div className="result-data">
+              <img src={assests.star} alt="" />
+              {loading ? (
+                <div className="loader">
+                  <hr />
+                  <hr />
+                  <hr />
+                </div>
+              ) : (
+                <p dangerouslySetInnerHTML={{ __html: resultData }}>
+                  {/* {resultData} */}
+                </p>
+              )}
+            </div>
           </div>
-          <div className="card">
-            <p>Briefly summarize this concept: urban planing</p>
-            <img src={assests.idea} alt="" />
-          </div>
-          <div className="card">
-            <p>Brainstorm team bonding activites for our work retreat</p>
-            <img src={assests.comment} alt="" />
-          </div>
-          <div className="card">
-            <p>Improve the readebility of the following code</p>
-            <img src={assests.code} alt="" />
-          </div>
-        </div>
+        )}
+
         <div className="main-bottom">
           <div className="search-box">
             <input
@@ -54,7 +81,13 @@ const Main = () => {
             <div>
               <img src={assests.photo} alt="" />
               <img src={assests.mic} alt="" />
-              <img src={assests.communication} alt="" />
+              {input ? (
+                <img
+                  onClick={() => onSent()}
+                  src={assests.communication}
+                  alt=""
+                />
+              ) : null}
             </div>
           </div>
           <p className="bottom-info">
